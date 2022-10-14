@@ -1,0 +1,44 @@
+version: '3.9'  # 3.9 é a versão mais atual; declarar `version` é opcional desde v1.27.0
+services:
+  db:
+    image: mysql:8.0.31
+    command: '--default-authentication-plugin=mysql_native_password'
+    volumes:
+      - db_data:/var/lib/mysql # configura a persistência do diretório em que é salvo os arquivos da database
+    # container sempre será reiniciado quando é automaticamente cessado (por example, quando ocorre um erro)
+    # quando cessado manualmente, só será reiniciado quandos estes são manualemente reinicializados:
+    # - o Docker daemon (`systemctl restart docker`)
+    # - o própio container (`docker container restart container-name`)
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpassword # variável obrigatória
+      # following variables must match respectively WORDPRESS_DB_NAME, WORDPRESS_DB_USER, WORDPRESS_DB_PASSWORD:
+      - MYSQL_DATABASE=dbexample # variável opcional, permite criar uma database durante o startup
+      - MYSQL_USER=userexample # variável opcional, cria um usuário p/ MYSQL_DATABASE com privilégios de administrador
+      - MYSQL_PASSWORD=passwordexample # variável obrigatória caso MYSQL_USER esteja presente
+    expose: # database será acessível através da porta 3306/33060 somente por outros containers que estão na mesma rede 
+      - 3306
+      - 33060
+
+  wordpress:
+    image: wordpress:6.0.2
+    volumes:
+      - wp_data:/var/www/html # configura a persistência do DocumentRoot do WordPress
+    ports:
+      - 80:80 # mapeia a porta 80 do host para a porta 80 do wordpress container
+    restart: always
+    environment:
+      - WORDPRESS_DB_HOST=db # deve conter o nome do host e a porta do serviço MySQL; `db` se refere ao nome do serviço
+      # following variables must match respectively MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD:
+      - WORDPRESS_DB_NAME=dbexample # database deve existir no servidor MySQL
+      - WORDPRESS_DB_USER=userexample
+      - WORDPRESS_DB_PASSWORD=passwordexample
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - 3307:80 # mapeia a porta 3307 do host para a porta 80 do phpmyadmin container
+volumes: # volumes são armazenados no diretório `/var/lib/docker/volumes`
+  db_data:
+  wp_data:
