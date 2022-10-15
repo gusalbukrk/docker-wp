@@ -2,6 +2,9 @@ version: '3.9'  # 3.9 é a versão mais atual; declarar `version` é opcional de
 
 services:
   db:
+    # usar uma tag semantica — por exemplo, `8.0.31` — é melhor do que usar a tag `latest`
+    # pois, a tag `latest` é mutável e geralemente aponta para versão sendo que está desenvolvida atualmente
+    # e, por isso, há a possibilidade de *breaking changes* a qualquer momento
     image: mysql:8.0.31
     command: '--default-authentication-plugin=mysql_native_password'
     volumes:
@@ -22,8 +25,9 @@ services:
       # - MYSQL_PASSWORD=passwordexample # variável obrigatória caso MYSQL_USER esteja presente
       - MYSQL_PASSWORD_FILE=/run/secrets/db_password
     expose: # database será acessível através da porta 3306/33060 somente por outros containers que estão na mesma rede 
-      - 3306
-      - 33060
+      - 3306 # porta padrão do protocolo clássico do MySQL
+      # porta do procotolo X do MySQL é calculada multiplicando por 10 a porta que está sendo usada p/ o protocolo clásico
+      # - 33060
     secrets: # define os secrets disponíveis para os container(s) desse serviço
       - db_root_password
       - db_password
@@ -47,7 +51,7 @@ services:
       - db_password
 
   phpmyadmin:
-    image: phpmyadmin:latest
+    image: phpmyadmin:5.2.0
     restart: always
     ports:
       - 3307:80 # mapeia a porta 3307 do host para a porta 80 do phpmyadmin container
