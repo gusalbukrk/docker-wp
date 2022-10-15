@@ -23,6 +23,7 @@ O Docker Compose é uma ferramenta que auxilia na declaração, compartilhamento
 - **Documentação das imagens**: [WordPress](https://hub.docker.com/_/wordpress), [MySQL](https://hub.docker.com/_/mysql) e [phpMyAdmin](https://hub.docker.com/_/phpmyadmin)
 - [Docker compose version 3.8 or 3.9 for latest?](https://forums.docker.com/t/docker-compose-version-3-8-or-3-9-for-latest/102439)
 - [Understanding Docker’s “latest” Tag](https://www.howtogeek.com/devops/understanding-dockers-latest-tag/)
+- [Wordpress latest does not works with mysql latest container](https://github.com/docker-library/wordpress/issues/313)
 - [Docker Compose Restart Policies](https://www.baeldung.com/ops/docker-compose-restart-policies)
 - [The Complete Guide to Docker Volumes](https://towardsdatascience.com/the-complete-guide-to-docker-volumes-1a06051d2cce)
 - [The Complete Guide to Docker Secrets](https://earthly.dev/blog/docker-secrets/)

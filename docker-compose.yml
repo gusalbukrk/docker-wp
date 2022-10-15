@@ -1,4 +1,4 @@
-version: '3.9'  # 3.9 é a versão mais atual; declarar `version` é opcional desde v1.27.0
+version: '3.9'  # 3.9 é a versão mais atual; declarar a `version` é opcional desde v1.27.0
 
 services:
   db:
@@ -6,7 +6,10 @@ services:
     # pois, a tag `latest` é mutável e geralemente aponta para versão sendo que está desenvolvida atualmente
     # e, por isso, há a possibilidade de *breaking changes* a qualquer momento
     image: mysql:8.0.31
-    command: '--default-authentication-plugin=mysql_native_password'
+    # MySQL 8 usa o `caching_sha2_password` como o plugin de autenticação padrão
+    # use `mysql> select user,plugin,host from mysql.user where user='userexample';` p/ checar o plugin de autenticação
+    # a linha abaixo era necessária quando o PHP/WordPress ainda não suportava esse novo plugin
+    # command: '--default-authentication-plugin=mysql_native_password'
     volumes:
       - db_data:/var/lib/mysql # configura a persistência do diretório em que é salvo os arquivos da database
     # container sempre será reiniciado quando é automaticamente cessado (por example, quando ocorre um erro)
@@ -56,7 +59,7 @@ services:
     ports:
       - 3307:80 # mapeia a porta 3307 do host para a porta 80 do phpmyadmin container
 
-secrets: # define os secrets disponíveis para aos serviços declarados nesse arquivo
+secrets: # define os secrets disponíveis para os serviços declarados nesse arquivo
   db_root_password:
     file: db_root_password.txt
   db_password:
