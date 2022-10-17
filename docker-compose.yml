@@ -57,7 +57,7 @@ services:
     image: phpmyadmin:5.2.0
     restart: always
     ports:
-      - 3307:80 # mapeia a porta 3307 do host para a porta 80 do phpmyadmin container
+      - 82:80 # mapeia a porta 82 do host para a porta 80 do phpmyadmin container
 
 secrets: # define os secrets disponíveis para os serviços declarados nesse arquivo
   db_root_password:
