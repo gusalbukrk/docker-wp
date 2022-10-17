@@ -7,7 +7,7 @@
 ### Dockerfile
 
 1. abra o terminal e use o comando `git clone` para fazer o download desse repositório
-2. use o comando `cd` para mudar o diretório e ir para a pasta `Dockerfile` do repositório
+2. use o comando `cd` para mudar o diretório e ir para a pasta [Dockerfile](./Dockerfile/) do repositório
 3. use `chmod u+x script.sh` para tornar o script bash executável 
 4. execute o script usando `./script.sh senha-root senha-admin`, note que o script deve receber 2 argumentos:
   - o primeiro argumento é a senha do usuário root
