@@ -35,7 +35,7 @@ services:
       - db_root_password
       - db_password
 
-  wordpress:
+  wp:
     image: wordpress:6.0.2
     volumes:
       - wp_data:/var/www/html # configura a persistência do DocumentRoot do WordPress
@@ -53,7 +53,7 @@ services:
       - db_root_password
       - db_password
 
-  phpmyadmin:
+  admin:
     image: phpmyadmin:5.2.0
     restart: always
     ports:
